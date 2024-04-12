@@ -1,21 +1,28 @@
-import { DateFiller, Event } from "@/types";
+import { DateFilter, Event } from "@/types";
 
 export async function getAllEvents() {
-  const response = await fetch(
-    "https://nextjs-course-c81cc-default-rtdb.firebaseio.com/events.json"
-  );
-  const data = await response.json();
+  const events: Event[] = [];
+  try {
+    const response = await fetch(
+      "https://next-js-events-app-bb688-default-rtdb.firebaseio.com/events.json"
+    );
+    const data = await response.json();
 
-  const events = [];
+    if (data?.error) {
+      throw new Error("Something went wrong!");
+    }
 
-  for (const key in data) {
-    events.push({
-      id: key,
-      ...data[key],
-    });
+    for (const key in data) {
+      events.push({
+        id: key,
+        ...data[key],
+      });
+    }
+
+    return events;
+  } catch (error) {
+    return events;
   }
-
-  return events as Event[];
 }
 
 export async function getFeaturedEvents() {
@@ -28,7 +35,7 @@ export async function getEventById(id: string) {
   return allEvents.find((event) => event.id === id);
 }
 
-export async function getFilteredEvents(dateFilter: DateFiller) {
+export async function getFilteredEvents(dateFilter: DateFilter) {
   const { year, month } = dateFilter;
 
   const allEvents = await getAllEvents();

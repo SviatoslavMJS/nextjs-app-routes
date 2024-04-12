@@ -1,9 +1,7 @@
-import { Event } from "@/types";
-
 import Button from "../ui/button";
 import classes from "./results-title.module.css";
 
-type ResultsTitleProps = Pick<Event, "date">;
+type ResultsTitleProps = { date: Date };
 
 function ResultsTitle(props: ResultsTitleProps) {
   const { date } = props;

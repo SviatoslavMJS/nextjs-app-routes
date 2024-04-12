@@ -12,16 +12,22 @@ function EventList(props: EventListProps) {
 
   return (
     <ul className={classes.list}>
-      {items.map((event) => (
-        <EventItem
-          id={event.id}
-          key={event.id}
-          date={event.date}
-          title={event.title}
-          image={event.image}
-          location={event.location}
-        />
-      ))}
+      {items?.length ? (
+        items.map((event) => (
+          <EventItem
+            id={event.id}
+            key={event.id}
+            date={event.date}
+            title={event.title}
+            image={event.image}
+            location={event.location}
+          />
+        ))
+      ) : (
+        <li>
+          <h1>No events yet</h1>
+        </li>
+      )}
     </ul>
   );
 }

@@ -6,7 +6,7 @@ import LogisticsItem from "./logistics-item";
 import AddressIcon from "../icons/address-icon";
 import classes from "./event-logistics.module.css";
 
-function EventLogistics(props: Event): JSX.Element {
+function EventLogistics(props: Omit<Event, "id" | "title">): JSX.Element {
   const { date, location, image, imageAlt = "enent" } = props;
 
   const humanReadableDate = new Date(date).toLocaleDateString("en-US", {
@@ -19,7 +19,7 @@ function EventLogistics(props: Event): JSX.Element {
   return (
     <section className={classes.logistics}>
       <div className={classes.image}>
-        <Image src={`/${image}`} alt={imageAlt} width={400} height={400} />
+        <Image priority src={`/${image}`} alt={imageAlt} width={400} height={400} />
       </div>
       <ul className={classes.list}>
         <LogisticsItem icon={<DateIcon />}>
