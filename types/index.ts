@@ -12,4 +12,10 @@ export type Event = {
   image: string;
   location: string;
   imageAlt?: string;
+  isFeatured?: boolean;
+};
+
+export type DateFiller = {
+  year: number;
+  month: number;
 };
