@@ -1,12 +1,20 @@
-import dayjs from "dayjs";
-import LocaleData from "dayjs/plugin/localeData";
+import Head from "next/head";
+import { AppProps } from "next/app";
 
+import Layout from "../components/layout/layout";
 import "../styles/globals.css";
 
-dayjs.extend(LocaleData);
-
-function MyApp({ Component, pageProps }: any) {
-  return <Component {...pageProps} />;
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <Layout>
+      <Head>
+        <title>Next Events</title>
+        <meta name="description" content="NextJS Events" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <Component {...pageProps} />
+    </Layout>
+  );
 }
 
 export default MyApp;

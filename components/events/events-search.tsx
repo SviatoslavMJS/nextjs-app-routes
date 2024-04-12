@@ -1,9 +1,8 @@
-import dayjs from "dayjs";
+import { globalMonths } from "@/config";
 import { FormEvent, useRef } from "react";
 
 import Button from "../ui/button";
 import classes from "./events-search.module.css";
-
 
 type EventSearchProps = {
   onSearch: (selectedYear?: string, selectedMonth?: string) => void;
@@ -35,7 +34,7 @@ function EventsSearch(props: EventSearchProps) {
         <div className={classes.control}>
           <label htmlFor="month">Month</label>
           <select id="month" ref={monthInputRef}>
-            {dayjs.months().map((month: string, idx: number) => (
+            {globalMonths.map((month: string, idx: number) => (
               <option key={month} value={idx + 1}>
                 {month}
               </option>
