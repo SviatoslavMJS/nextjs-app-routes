@@ -1,21 +1,22 @@
+import { Comment } from "@/types";
+
 import classes from "./comment-list.module.css";
 
-function CommentList(): JSX.Element {
+type CommentsListProps = {
+  items?: Comment[];
+};
+
+function CommentList({ items }: CommentsListProps): JSX.Element {
   return (
     <ul className={classes.comments}>
-      {/* Render list of comments - fetched from API */}
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
+      {items?.map(({ text, name, id }) => (
+        <li key={id}>
+          <p>{text}</p>
+          <div>
+            By <address>{name}</address>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 }

@@ -1,5 +1,5 @@
 import { Comment } from "@/types";
-import { useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 import classes from "./new-comment.module.css";
 
@@ -14,7 +14,7 @@ function NewComment(props: NewCommentProps) {
   const nameInputRef = useRef<HTMLInputElement>(null);
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
 
-  function sendCommentHandler(event: Event) {
+  function sendCommentHandler(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const enteredEmail = emailInputRef?.current?.value;
@@ -42,7 +42,7 @@ function NewComment(props: NewCommentProps) {
   }
 
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={sendCommentHandler}>
       <div className={classes.row}>
         <div className={classes.control}>
           <label htmlFor="email">Your email</label>
@@ -58,7 +58,7 @@ function NewComment(props: NewCommentProps) {
         <textarea id="comment" rows={5} ref={commentInputRef}></textarea>
       </div>
       {isInvalid && <p>Please enter a valid email address and comment!</p>}
-      <button>Submit</button>
+      <button type="submit">Submit</button>
     </form>
   );
 }

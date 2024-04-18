@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Comment } from "@/types";
 
 import CommentList from "./comment-list";
@@ -14,6 +14,7 @@ type CommentData = Omit<Comment, "id">;
 function Comments(props: CommentProps) {
   const { eventId } = props;
 
+  const [comments, setComments] = useState([]);
   const [showComments, setShowComments] = useState(false);
 
   function toggleCommentsHandler() {
@@ -21,8 +22,29 @@ function Comments(props: CommentProps) {
   }
 
   function addCommentHandler(commentData: CommentData) {
-    // send data to API
+    fetch(`api/comments/${eventId}`, {
+      method: "POST",
+      body: JSON.stringify(commentData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
   }
+
+  const fetchList = async () => {
+    fetch(`api/comments/${eventId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setComments(data?.comments);
+      });
+  };
+
+  useEffect(() => {
+    if (showComments) {
+      fetchList();
+    }
+  }, [eventId, showComments]);
 
   return (
     <section className={classes.comments}>
@@ -30,7 +52,7 @@ function Comments(props: CommentProps) {
         {showComments ? "Hide" : "Show"} Comments
       </button>
       {showComments && <NewComment onAddComment={addCommentHandler} />}
-      {showComments && <CommentList />}
+      {showComments && <CommentList items={comments} />}
     </section>
   );
 }
